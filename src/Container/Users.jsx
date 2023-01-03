@@ -1,5 +1,5 @@
 import React,{useEffect} from 'react';
-import { Usercard } from '../components';
+import { Pagination, Usercard, Filter} from '../components';
 import { useStateValue } from '../context/contexts/contextProvider';
 import {users} from '../utilities/Data';
 import {getAllUsers} from '../Api/Apicalls'
@@ -8,7 +8,7 @@ import { useStateContext } from '../context/ContextProvider';
 
 const Users = () => {
   const [{usersinfo}, dispatch] = useStateValue();
-  const { isDetails,setIsDetails}= useStateContext();
+  const { isDetails,setIsDetails,post, setPost,Loading, setLoading,currentPage, setCurrentPage,postPerPage, setPostPerPage,display, setDisplay,isFilter, setIsFilter}= useStateContext();
 
   useEffect(() => {
     if (!usersinfo) {
@@ -20,9 +20,43 @@ const Users = () => {
           usersinfo: data,
         });
       });
+       
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  useEffect(() => {
+    setPost(usersinfo);
+  
+    
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  // const shows = (e) =>{
+  //   setDisplay(e.target.value);
+  //   setPostPerPage(setDisplay);
+  // }
+
+  useEffect(() => {
+    setPostPerPage(100||display)
+    
+  
+  }, [display,setPostPerPage])
+
+  
+
+
+console.log('post',display)
+  //get current post
+  const indexOfLastPost = currentPage * postPerPage;
+  const indexOfFirstPost = indexOfLastPost - postPerPage;
+  const currentPost = post.slice(indexOfFirstPost,indexOfLastPost)
+  
+  const pagenate =(pageNumber)=>{
+    setCurrentPage(pageNumber);
+  }
+
+  
 
   return (
     <div className='flex flex-col justify-center mt-16  m-2 md:m-10 p-2  md:p-10 bg-bguser rounded-2xl'>
@@ -50,48 +84,64 @@ const Users = () => {
         {/*table heading*/}
         <div className="w-full  flex items-center justify-between ">
           <p className="text-sm font-semibold text-textColor w-275 min-w-[160px] flex items-center justify-center gap-2">
-            ORGANIZATION <span><svg width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            ORGANIZATION <span
+            onClick={()=>{ setIsFilter(!isFilter) }}
+            ><svg width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M6.22222 11.3333H9.77778V9.55554H6.22222V11.3333ZM0 0.666656V2.44443H16V0.666656H0ZM2.66667 6.88888H13.3333V5.1111H2.66667V6.88888Z" fill="#545F7D"/>
 </svg></span>
           </p>
           <p className="text-sm font-semibold text-textColor w-275 min-w-[160px] flex items-center justify-center gap-2">
-            USERNAME <span><svg width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            USERNAME <span onClick={()=>{ setIsFilter(!isFilter) }}><svg width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M6.22222 11.3333H9.77778V9.55554H6.22222V11.3333ZM0 0.666656V2.44443H16V0.666656H0ZM2.66667 6.88888H13.3333V5.1111H2.66667V6.88888Z" fill="#545F7D"/>
 </svg></span>
           </p>
           <p className="text-sm font-semibold text-textColor w-275 min-w-[160px] flex items-center justify-center gap-2">
-            EMAIL <span><svg width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            EMAIL <span onClick={()=>{ setIsFilter(!isFilter) }}><svg width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M6.22222 11.3333H9.77778V9.55554H6.22222V11.3333ZM0 0.666656V2.44443H16V0.666656H0ZM2.66667 6.88888H13.3333V5.1111H2.66667V6.88888Z" fill="#545F7D"/>
 </svg></span>
           </p>
           <p className="text-sm font-semibold text-textColor w-275 min-w-[160px] flex items-center justify-center gap-2">
-            PHONE NUMBER <span><svg width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            PHONE NUMBER <span onClick={()=>{ setIsFilter(!isFilter) }}><svg width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M6.22222 11.3333H9.77778V9.55554H6.22222V11.3333ZM0 0.666656V2.44443H16V0.666656H0ZM2.66667 6.88888H13.3333V5.1111H2.66667V6.88888Z" fill="#545F7D"/>
 </svg></span>
           </p>
           <p className="text-sm font-semibold text-textColor w-275 min-w-[160px] flex items-center justify-center gap-2">
-            DATE JOINED <span><svg width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            DATE JOINED <span onClick={()=>{ setIsFilter(!isFilter) }}><svg width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M6.22222 11.3333H9.77778V9.55554H6.22222V11.3333ZM0 0.666656V2.44443H16V0.666656H0ZM2.66667 6.88888H13.3333V5.1111H2.66667V6.88888Z" fill="#545F7D"/>
 </svg></span>
           </p>
           <p className="text-sm font-semibold text-textColor w-275 min-w-[160px] flex items-center justify-center gap-2">
-            STATUS <span><svg width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            STATUS <span onClick={()=>{ setIsFilter(!isFilter) }}><svg width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M6.22222 11.3333H9.77778V9.55554H6.22222V11.3333ZM0 0.666656V2.44443H16V0.666656H0ZM2.66667 6.88888H13.3333V5.1111H2.66667V6.88888Z" fill="#545F7D"/>
 </svg></span>
           </p>
         </div>
+        {/*filter*/}
+        
         {/*table content*/}
         {
-          usersinfo &&
-            usersinfo.map((info,idx) => <Usercard info={info} idx={idx} click={()=>setIsDetails(!isDetails)} />)
+          currentPost &&
+          currentPost.map((info,idx) => <Usercard info={info} idx={idx} onClick={()=>setIsDetails(!isDetails)} />)
+        }
+        {
+          isFilter && (
+           
+            <Filter/>
+            
+          )
         }
       
       </div>
+      
 
       <div className='flex items-center justify-between'> 
       <div className='  flex items-center justify-center gap-2'>
 <label for="countries" class="flex mb-2 text-sm font-medium text-gray-900 dark:text-white">Showing</label>
-<select id="countries" class=" w-20 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+<select 
+onChange={(e) => {
+  setDisplay(e.target.value);
+}}
+id="countries" class=" w-20 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
   <option selected>100</option>
   <option value="10">10</option>
   <option value="20">20</option>
@@ -100,7 +150,7 @@ const Users = () => {
 </select>
       <p className=' text-xs'>out of 100</p>
       </div>
-      <div>Pages</div>
+      <Pagination totalPosts={usersinfo.length} pagenate={pagenate}/>
       </div>
       
       

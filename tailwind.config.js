@@ -58,6 +58,8 @@ module.exports = {
         inactive:"#545F7D",
         active:"#39CD62",
         blacklist:"#E4033B",
+        pending:"#E9B200",
+        arrBg:"rgba(33, 63, 125, 0.1)"
 
       },
     },

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {BiDotsVerticalRounded} from 'react-icons/bi'
 import { IoMdExit } from 'react-icons/io';
 import { useStateContext } from '../context/ContextProvider'
@@ -6,21 +6,32 @@ import { useStateValue } from '../context/contexts/contextProvider';
 
 
 
-const Usercard = ({info,idx,click}) => {
+const Usercard = ({info,idx,onClick}) => {
 
-  const {isDetails, setIsDetails}= useStateContext();
+  const {isDetails, setIsDetails,Loading}= useStateContext();
 
   const [{usersinfo}, dispatch] = useStateValue();
+  
+ 
+const payment = info.education.loanRepayment;
 
-const checkDetails = (id)=>{
-  const me = usersinfo.filter(x=> x.id === id)
-  console.log("me",me)
-  console.log("id",id)
- if (id === "1") {
-  setIsDetails(true);
- }
+const [payments, setpayments] = useState(payment);
 
-}
+console.log('pay',payments);
+// const newdate = new Date(date);
+// var current_time =
+// newdate.getHours() + ":" + newdate.getMinutes() + ":" + newdate.getSeconds();
+// console.log('date',current_time);
+
+// const checkDetails = (id)=>{
+//   const me = usersinfo.filter(x=> x.id === id)
+//   console.log("me",me)
+//   console.log("id",id)
+//  if (id === "1") {
+//   setIsDetails(true);
+//  }
+
+// }
 
   return (
     
@@ -47,18 +58,22 @@ const checkDetails = (id)=>{
       {info.createdAt}
     </p>
     <div className=" text-xs text-textColor w-275 min-w-[160px] text-center">
-      <p className='  rounded-full  bg-active w-24 m-2 p-2 opacity-40'>
-      Active
+      <p className={`rounded-full w-24 m-2 p-2 opacity-80 
+      ${payments > 300 && "bg-active"} 
+      ${payments >= 100 && payments <= 200 && "bg-inactive"} 
+      ${payments <= 100 && "bg-blacklist"} 
+      ${payments >= 200 && payments <= 300 && "bg-pending"} `}>
+      {payments > 300 ? "Active" : payments <= 100 ? "Blacklisted" : payments >= 200 && payments <= 300 ? "Pending" : payments >= 100 && payments <= 200 ? "Inactive":''  }
       </p>
     </div>
     {
       usersinfo &&  (
         <div
         className="absolute right-4 w-8 h-8 rounded-md flex items-center justify-center bg-gray-200"
-        onClick={click}
+        onClick={onClick}
         key={idx}
       >
-        <div className="flex items-center">
+        <div className="flex items-center" key={idx}>
           <BiDotsVerticalRounded/>
         </div>
        
