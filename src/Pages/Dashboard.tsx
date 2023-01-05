@@ -2,6 +2,7 @@ import { Route, Routes } from 'react-router-dom';
 import {Header,Filter} from '../components'
 import Sidebar from '../Container/Sidebar';
 import {Users} from '../Container'
+import Profile from './Profile';
 
 const Dashboard = () => {
 
@@ -16,7 +17,7 @@ const Dashboard = () => {
         <Routes>
           <Route path="/users" element={<Users />} />
           <Route path="/filter" element={<Filter />} />
-          
+          <Route path="/profile" element={<Profile />} />
         </Routes>
       </div>
     </div>

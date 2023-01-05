@@ -13,7 +13,7 @@ export const getAllUsers  = async () =>{
 
 export const getUser = async (userId) =>{
     try {
-        const res = await axios.delete(`https://6270020422c706a0ae70b72c.mockapi.io/lendsqr/api/v1/users/${userId}`)
+        const res = await axios.get(`https://6270020422c706a0ae70b72c.mockapi.io/lendsqr/api/v1/users/${userId}`)
         return res.data;
     } catch (error) {
         return null;
