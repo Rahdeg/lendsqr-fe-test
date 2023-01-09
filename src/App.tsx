@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import { Login } from './Pages';
-import {Dashboard} from './Pages'
+import {Dashboard,Protected} from './Pages'
 
 const App: React.FC = () => {
   return (
@@ -10,7 +10,11 @@ const App: React.FC = () => {
     
           <Routes>
             <Route path="/" element={<Login/>} />
+
+            <Route element={<Protected/>}>
             <Route path="/dashboard/*" element={<Dashboard/>} />
+            </Route>
+            
           </Routes>
       
     </div>

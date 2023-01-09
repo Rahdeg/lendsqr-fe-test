@@ -1,15 +1,44 @@
-import React, { useState } from "react";
+import React, { useState,useRef } from "react";
 import { BiDotsVerticalRounded } from "react-icons/bi";
 import { NavLink } from "react-router-dom";
 import { useStateContext } from "../context/ContextProvider";
 import { useStateValue } from "../context/contexts/contextProvider";
+import useOnClickOutside from '../components/UseclickOutside'
+import { getUser } from "../Api/Apicalls";
+import { actionType } from "../context/contexts/reducer";
+import {AiOutlineEyeInvisible} from 'react-icons/ai'
+import {FaUserTimes,FaUserCheck} from 'react-icons/fa'
 
-const Usercard = ({ info, DetailsProp, keys }) => {
-  const { isDetails, setIsDetails, Loading } = useStateContext();
+const Usercard = ({ info, keys }) => {
+  const { isDetails, setIsDetails, Loading ,userId, setUserId} = useStateContext();
+const ref = useRef();
+
+
+  const [det, setdet] = useState(false)
+  useOnClickOutside(ref,()=> setdet(false))
 
   const [{ usersinfo }, dispatch] = useStateValue();
 
-  const userDetail = (_) => DetailsProp();
+  const Details = () => {
+    setdet(!isDetails);
+  };
+const activateUser =(info)=>{
+setdet(!isDetails);
+// const data = usersinfo.filter(data=>data.id === info);
+// console.log('active',data[0].education.loanRepayment);
+const data = usersinfo.filter(item=>item.id===info );
+console.log('active',data);
+}
+  const updateDetails = (userid) => {
+    setdet(!isDetails);
+    setUserId(userid);
+    getUser(userId).then((data) => {
+      localStorage.setItem("user", JSON.stringify(data));
+      dispatch({
+        type: actionType.SET_USER,
+        userinfo: data,
+      });})
+  };
 
   const payment = info.education.loanRepayment;
 
@@ -73,39 +102,50 @@ const Usercard = ({ info, DetailsProp, keys }) => {
       </div>
       <div
         className="absolute right-4 w-8 h-8 rounded-md flex items-center justify-center bg-gray-200"
-        onClick={userDetail}
+        onClick={Details}
       >
         <div className="flex items-center">
           <BiDotsVerticalRounded />
         </div>
       </div>
-      {isDetails && (
+      {det && (
         <div
-          className="absolute  top-6 right-4 p-4 flex items-center flex-col gap-3 bg-white shadow-xl rounded-md"
+          className="absolute justify-center   top-0 right-4 p-3 flex items-center flex-col gap-2 bg-white shadow-xl rounded-md"
           onClick={() => {
-            setIsDetails(false);
+            setdet(false);
           }}
           key={keys}
+          ref={ref}
         >
           {console.log(info.id)}
-          <p
-            className=" text-textColor font-semibold"
-            onClick={() => {
-              setIsDetails(false);
-            }}
-          >
-            Activate
-          </p>
           <NavLink to={"/dashboard/profile"}>
             <p
-              className=" text-textColor font-semibold"
+              className="flex items-center justify-center text-textColor font-semibold gap-3"
               onClick={() => {
-                setIsDetails(false);
+                updateDetails(info.id);
               }}
             >
-              User Details
+             <AiOutlineEyeInvisible/> <span>View Details</span> 
             </p>
           </NavLink>
+          <p
+            className="flex items-center justify-center text-textColor font-semibold gap-3"
+            onClick={() => {
+              setdet(false);
+            }}
+          >
+           <FaUserTimes/> <span>Blacklist User</span> 
+          </p>
+          
+            <p
+              className="flex items-center justify-center text-textColor font-semibold gap-3"
+              onClick={() => {
+                activateUser(info.id);
+              }}
+            >
+              <FaUserCheck/> <span>Activate User</span>
+            </p>
+          
         </div>
       )}
     </div>

@@ -1,14 +1,25 @@
-import {Icon,Search} from '../components'
+import {Icon,Search} from '.'
 import {IoIosNotificationsOutline} from 'react-icons/io'
 import {MdLogout} from 'react-icons/md'
 import IMG from '../Images/image 4 (1).png'
 import { useStateContext } from '../context/ContextProvider'
-import { useEffect } from 'react'
+import { useEffect,useState } from 'react'
+import { useStateValue } from '../context/contexts/contextProvider'
+import { getAllUsers, getUser } from '../Api/Apicalls'
+import { actionType } from '../context/contexts/reducer'
+import {IoMdLogOut} from 'react-icons/io'
+import { useNavigate } from 'react-router-dom'
+
+
 
 
 const Header = () => {
-  const {setActiveMenu,isMenu,setIsMenu,ActiveMenu,screenSize,setScreenSize,}= useStateContext();
+  const {setActiveMenu,isMenu,setIsMenu,ActiveMenu,screenSize,setScreenSize,userId}= useStateContext();
+  const [{ userinfo,usersinfo }, dispatch] = useStateValue();
+  const [logout, setlogout] = useState(false);
 
+  const navigate = useNavigate();
+  
   
     useEffect(() => {
       const handleResize =()=>setScreenSize(window.innerWidth);
@@ -28,10 +39,41 @@ const Header = () => {
   
     }, [screenSize,setActiveMenu])
 
-    
+    useEffect(() => {
+      if (!usersinfo) {
+        getAllUsers().then((data) => {
+          console.log(data);
+          localStorage.setItem("users", JSON.stringify(data));
+          dispatch({
+            type: actionType.SET_USERS,
+            usersinfo: data,
+          });
+        });
+      }
+      if (!userinfo) {
+        getUser(userId).then((data) => {
+          console.log("data", data);
+          localStorage.setItem("user", JSON.stringify(data));
+          dispatch({
+            type: actionType.SET_USER,
+            userinfo: data,
+          });
+        });
+      }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+  
+    const logOut =()=>{
+      localStorage.setItem("user", JSON.stringify([]));
+      dispatch({
+        type: actionType.SET_USER,
+        userinfo: [],
+      });
+      navigate('/',{replace:true});
+    }
 
   return (
-    <div className='fixed z-50 w-screen p-3 px-4  loginbg'>
+    <div className='fixed z-50 w-screen p-3 px-4  bg-loginbg'>
     {/* desktop & tablet */}
     <div className='hidden md:flex w-full h-full items-center justify-between gap-4'>
     <div className='flex items-center justify-center gap-36'>
@@ -42,11 +84,29 @@ const Header = () => {
         <p>Docs</p>
         <IoIosNotificationsOutline/>
         <div className='flex items-center justify-center gap-3'>
-        <img className="w-10 h-10 rounded-full" src={IMG} alt="" id='profile__img'/>
-            <p>Raheem</p>
-            <svg width="10" height="5" viewBox="0 0 8 5" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <img className="w-10 h-10 rounded-full" src={userinfo?.profile?.avatar} alt="" id='profile__img'/>
+            <p>{userinfo?.userName}</p>
+            <svg width="15" height="7" viewBox="0 0 8 5" fill="none" xmlns="http://www.w3.org/2000/svg" onClick={()=>{setlogout(!logout)}}>
 <path fill-rule="evenodd" clip-rule="evenodd" d="M3.39229 4.0516C3.72823 4.42504 4.27511 4.42192 4.60791 4.0516L7.48291 0.856996C7.81885 0.484336 7.68525 0.181995 7.18447 0.181995H0.815667C0.314887 0.181995 0.183627 0.487456 0.517227 0.856996L3.39229 4.0516Z" fill="#213F7D"/>
 </svg>
+{logout && (
+        <div
+          className="absolute justify-center   top-10  right-4 p-3 flex items-center flex-col gap-2 bg-white shadow-xl rounded-md"
+          onClick={() => {
+            setlogout(false);
+          }}
+         >
+            <p
+              className="flex items-center justify-center text-textColor font-semibold gap-3"
+              onClick={() => {
+               logOut();
+              }}
+      
+            >
+             <IoMdLogOut/> <span>Logout</span> 
+            </p>
+        </div>
+      )}
         </div>
     </div>
         

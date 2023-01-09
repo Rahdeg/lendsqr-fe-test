@@ -4,11 +4,26 @@ import {AiOutlineStar,AiFillStar} from 'react-icons/ai'
 import IMG from '../Images/image 4 (1).png'
 import { useStateValue } from '../context/contexts/contextProvider';
 import { Link } from 'react-router-dom';
+import { getUser } from '../Api/Apicalls';
+import { actionType } from '../context/contexts/reducer';
+import { useStateContext } from '../context/ContextProvider';
 
 const Profile = () => {
   const [{userinfo}, dispatch] = useStateValue();
+  const { isDetails, setIsDetails, Loading ,userId, setUserId} = useStateContext();
 
  
+  useEffect(() => {
+    getUser(userId).then((data) => {
+      localStorage.setItem("user", JSON.stringify(data));
+      dispatch({
+        type: actionType.SET_USER,
+        userinfo: data,
+      });})
+  
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+  
 
   return (
     
@@ -44,7 +59,7 @@ const Profile = () => {
       <div className='flex items-center justify-start gap-2 border-solid border-r-2  border-cyan-50'>
       <img className="w-10 h-10 rounded-full" src={IMG} alt="" id='profile__img'/>
       <div className='flex flex-col items-start justify-center'>
-        <p>{userinfo.profile.firstName} </p>
+        <p>{userinfo.userName} </p>
         <p>HG739899</p>
       </div>
       <div className=''> </div>

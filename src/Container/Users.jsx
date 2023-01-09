@@ -1,14 +1,16 @@
-import React, { useEffect } from "react";
+import React, { useEffect,useState } from "react";
 import { Pagination, Usercard, Filter } from "../components";
 import { useStateValue } from "../context/contexts/contextProvider";
 import { users } from "../utilities/Data";
 import { getAllUsers, getUser } from "../Api/Apicalls";
 import { actionType } from "../context/contexts/reducer";
 import { useStateContext } from "../context/ContextProvider";
-import { NavLink } from "react-router-dom";
+import { fetchUser } from "../Api/fetchlocal";
+
 
 const Users = () => {
   const [{ usersinfo, userinfo }, dispatch] = useStateValue();
+  const [searchfield, setsearchfield] = useState("");
   const {
     isDetails,
     setIsDetails,
@@ -24,7 +26,10 @@ const Users = () => {
     setDisplay,
     isFilter,
     setIsFilter,
+    userId,
   } = useStateContext();
+
+fetchUser();
 
   useEffect(() => {
     if (!usersinfo) {
@@ -38,7 +43,7 @@ const Users = () => {
       });
     }
     if (!userinfo) {
-      getUser(1).then((data) => {
+      getUser(userId).then((data) => {
         console.log("data", data);
         localStorage.setItem("user", JSON.stringify(data));
         dispatch({
@@ -56,24 +61,23 @@ const Users = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // const shows = (e) =>{
-  //   setDisplay(e.target.value);
-  //   setPostPerPage(setDisplay);
-  // }
 
   useEffect(() => {
-    setPostPerPage(100 || display);
+    setPostPerPage(display?display:100);
   }, [display, setPostPerPage]);
 
-  const Details = () => {
-    setIsDetails(!isDetails);
-  };
-
+  
   console.log("post", display);
   //get current post
   const indexOfLastPost = currentPage * postPerPage;
   const indexOfFirstPost = indexOfLastPost - postPerPage;
   const currentPost = post.slice(indexOfFirstPost, indexOfLastPost);
+
+  const filteredPost = currentPost?.filter((item) => {
+    return item.userName.toLowerCase().includes(searchfield.toLowerCase());
+  });
+
+
 
   const pagenate = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -234,11 +238,14 @@ const Users = () => {
         {/*filter*/}
 
         {/*table content*/}
-        {currentPost &&
+        {
+          filteredPost ? filteredPost.map(info=>(<Usercard info={info} keys={info.id}  key={info.id}/>)):
+          currentPost &&
           currentPost.map((info) => (
-            <Usercard info={info} keys={info.id} DetailsProp={Details} />
-          ))}
-        {isFilter && <Filter />}
+            <Usercard info={info} keys={info.id}  key={info.id}/>
+          ))
+        }
+        {isFilter && <Filter setsearchfield={setsearchfield}/>}
       </div>
 
       <div className="flex items-center justify-between">
@@ -252,6 +259,7 @@ const Users = () => {
           <select
             onChange={(e) => {
               setDisplay(e.target.value);
+              setPostPerPage(display? display :100);
             }}
             id="countries"
             class=" w-20 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"

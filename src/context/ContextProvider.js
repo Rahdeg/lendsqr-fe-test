@@ -18,8 +18,9 @@ const [post, setPost] = useState([]);
 const [Loading, setLoading] = useState(false);
 const [currentPage, setCurrentPage] = useState(1);
 const [display, setDisplay] = useState('');
-const [postPerPage, setPostPerPage] = useState(100);
+const [postPerPage, setPostPerPage] = useState(display?display:100);
 const [isFilter, setIsFilter] = useState(false);
+const [userId, setUserId] = useState(1);
 
 
 const handleClick=(clicked)=>{
@@ -40,7 +41,7 @@ const setColor =(color)=>{
 
     return(
         <StateContext.Provider value={{activeMenu,currentColor,currentmode,setcurrentColor,setcurrentmode,setMode, setColor,
-            setActiveMenu,isClicked,setIsClicked,handleClick,screenSize,setScreenSize ,themesettings, setthemesettings,isMenu,setIsMenu,isDetails, setIsDetails,post,setPost,Loading,setLoading,currentPage,setCurrentPage,postPerPage, setPostPerPage,display, setDisplay,isFilter, setIsFilter}}>
+            setActiveMenu,isClicked,setIsClicked,handleClick,screenSize,setScreenSize ,themesettings, setthemesettings,isMenu,setIsMenu,isDetails, setIsDetails,post,setPost,Loading,setLoading,currentPage,setCurrentPage,postPerPage, setPostPerPage,display, setDisplay,isFilter, setIsFilter,userId, setUserId}}>
         {children}
         </StateContext.Provider>
     )
