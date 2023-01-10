@@ -101,7 +101,7 @@ console.log('active',data);
         </p>
       </div>
       <div
-        className="absolute right-4 w-8 h-8 rounded-md flex items-center justify-center bg-gray-200"
+        className="absolute  md:right-4 w-8 h-8 rounded-md flex items-center justify-center bg-gray-200"
         onClick={Details}
       >
         <div className="flex items-center">

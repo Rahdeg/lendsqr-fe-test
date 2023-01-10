@@ -105,7 +105,7 @@ fetchUser();
           ))}
       </div>
 
-      <div className="relative w-[1020px] py-12 min-w-[400px] min-h-[400px] overflow-x-scroll my-4 flex flex-col items-center justify-start p-4 border border-gray-300 rounded-md gap-2 bg-white">
+      <div className="relative w-full md:w-[1020px] py-12 min-w-full min-h-[400px] overflow-x-scroll my-4 flex flex-col items-center justify-start p-4 border border-gray-300 rounded-md gap-2 bg-white">
         {/*table heading*/}
         <div className="w-full  flex items-center justify-between ">
           <p className="text-sm font-semibold text-textColor w-275 min-w-[160px] flex items-center justify-center gap-2">
@@ -248,7 +248,7 @@ fetchUser();
         {isFilter && <Filter setsearchfield={setsearchfield}/>}
       </div>
 
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col md:flex-row items-center justify-between">
         <div className="  flex items-center justify-center gap-2">
           <label
             for="countries"

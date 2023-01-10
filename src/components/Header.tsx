@@ -114,8 +114,8 @@ const Header = () => {
     {/* mobile */}
     <div className='flex flex-col  items-center justify-center md:hidden w-full h-full'>
     <div className='flex items-center justify-between w-full mb-8'>
-    <div className='' onClick={()=>setActiveMenu(!ActiveMenu)}>
-    <Icon/>
+    <div className='' onClick={() => setActiveMenu(!ActiveMenu)} >
+    <Icon />
     </div>
     
     <div className='relative'>

@@ -37,9 +37,9 @@ const Profile = () => {
     <p><BsArrowLeft/></p> <span> Back to Users</span>
       </div>
       </Link>
-      <div className='flex items-center justify-between mt-3'>
+      <div className='flex flex-col md:flex-row items-center justify-between mt-3'>
       <p className=' text-[#213F7D] text-base font-bold'>User Details</p>
-    <div className='flex items-center justify-center'>
+    <div className='flex flex-col md:flex-row items-center justify-center'>
     <button className="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800">
   <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
       BLACKLIST USER
@@ -53,8 +53,8 @@ const Profile = () => {
     </div>
       </div>
     <div className='flex flex-col  gap-8 bg-white rounded-md px-3 mx-3 pt-4 mt-4'>
-      <div className='flex items-center '>
-      <div className='flex items-center justify-start gap-2 border-solid border-r-2  border-cyan-50'>
+      <div className='flex flex-col md:flex-row items-center '>
+      <div className='flex  flex-col md:flex-row items-center justify-start gap-2 border-solid border-b-2  md:border-r-2  border-cyan-50'>
       <img className="w-10 h-10 rounded-full" src={userinfo.profile.avatar} alt="" id='profile__img'/>
       <div className='flex flex-col items-start justify-center'>
         <p className='text-[#213F7D] text-base font-bold'>{userinfo.userName} </p>
@@ -62,19 +62,19 @@ const Profile = () => {
       </div>
       <div className=''> </div>
       </div>
-      <div className='flex  items-center justify-center gap-3 ml-3 border-solid border-r-2  border-cyan-50'>
+      <div className='flex flex-col md:flex-row  items-center justify-center gap-3 ml-3 border-solid border-b-2 md:border-r-2  border-cyan-50'>
         <div className='flex flex-col items-start justify-center gap-3'>
         <p className='text-[#213F7D] text-base font-bold'>User's Tier</p>
         <p className='flex items-center justify-center'><AiFillStar/> <AiOutlineStar/> <AiOutlineStar/></p>
         </div>
         <div className=''> </div>
       </div>
-      <div className='flex flex-col items-start ml-3 justify-start'>
+      <div className='flex flex-col md:items-start items-center  ml-3 justify-start'>
       <p className='text-[#213F7D] text-base font-bold'>{`#${userinfo.accountBalance}`}</p>
       <p>{userinfo.accountNumber} /<span>Providus Bank</span></p>
       </div>
       </div>
-    <div className='flex items-center justify-around mt-3'>
+    <div className='flex flex-col md:flex-row items-center justify-around mt-3'>
     <p className='border-solid border-b-2  border-[#39CDCC] text-[#39CDCC]'>General Details</p>
     <p className=''>Documents</p>
     <p className=''>Bank Details</p>
@@ -83,17 +83,17 @@ const Profile = () => {
     <p className=''>App and Systems</p>
     </div>
     </div>
-    <div className='flex flex-col  gap-8 bg-white rounded-md px-3 mx-3 pt-4 mt-4'>
+    <div className='flex flex-col  md:gap-8 gap-3 bg-white rounded-md px-3 mx-3 pt-4 mt-4'>
     <div className='flex flex-col items-start gap-5  border-solid border-b-2  border-[#39CDCC]'>
-    <p className='text-[#213F7D] text-base font-bold'>Personal Information</p>
-    <div className='flex items gap-20 mb-2'>
+    <p className='text-[#213F7D] text-base font-bold text-center md:text-start'>Personal Information</p>
+    <div className='flex flex-col md:flex-row items-center md:gap-20 gap-8 mb-2'>
       <div className='flex flex-col items-start justify-center'><p className=''>FULL NAME</p> <p className='text-[#213F7D] text-base font-bold'>{userinfo.profile.firstName}<span className=' ml-2'>{userinfo.profile.lastName}</span> </p></div>
       <div className='flex flex-col items-start justify-center'><p className=''>PHONE NUMBER</p> <p className='text-[#213F7D] text-base font-bold'>{userinfo.profile.phoneNumber} </p></div>
       <div className='flex flex-col items-start justify-center'><p className=''> EMAIL ADDRESS</p> <p className='text-[#213F7D] text-base font-bold'>{userinfo.email}</p></div>
       <div className='flex flex-col items-start justify-center'><p className=''>BVN</p> <p className='text-[#213F7D] text-base font-bold'>{userinfo.profile.bvn}</p></div>
       <div className='flex flex-col items-start justify-center'><p className=''>GENDER</p> <p className='text-[#213F7D] text-base font-bold'>{userinfo.profile.gender}</p></div>
     </div>
-    <div className='flex items-start gap-32 mb-2'>
+    <div className='flex flex-col md:flex-row items-center  md:items-start gap-10 md:gap-32 mb-2'>
     <div className='flex flex-col items-start justify-center'><p className=''>MARITAL STATUS</p> <p className='text-[#213F7D] text-base font-bold'>SINGLE </p></div>
       <div className='flex flex-col items-start justify-center'><p className=''>CHILDREN</p> <p className='text-[#213F7D] text-base font-bold'> None</p></div>
       <div className='flex flex-col items-start justify-center'><p className=''> TYPE OF RESIDENT</p> <p className='text-[#213F7D] text-base font-bold'>Parent's Apartment</p></div>
@@ -102,13 +102,13 @@ const Profile = () => {
     </div>
     <div className='flex flex-col items-start gap-5  border-solid border-b-2  border-[#39CDCC]'>
     <p className='text-[#213F7D] text-base font-bold'>Education and Employement</p>
-    <div className='flex items gap-24'>
+    <div className='flex flex-col md:flex-row items gap-10 md:gap-24'>
       <div className='flex flex-col items-start justify-center'><p className=''>LEVEL OF EDUCATION</p> <p className='text-[#213F7D] text-base font-bold'>{userinfo.education.level}</p></div>
       <div className='flex flex-col items-start justify-center'><p className=''>EMPLOYEMENT STATUS</p> <p className='text-[#213F7D] text-base font-bold'>{userinfo.education.employmentStatus}</p></div>
       <div className='flex flex-col items-start justify-center'><p className=''> SECTOR OF EMPLOYEMENT</p> <p className='text-[#213F7D] text-base font-bold'>{userinfo.education.sector}</p></div>
       <div className='flex flex-col items-start justify-center'> <p className=''>DURATION OF EMPLOYEMENT</p> <p className='text-[#213F7D] text-base font-bold'>{userinfo.education.duration}</p></div>
     </div>
-    <div className='flex items-start gap-32 mb-2'>
+    <div className='flex flex-col md:flex-row items-start gap-10 md:gap-32 mb-2'>
     <div className='flex flex-col items-start justify-center'><p className=''>OFFICE EMAIL</p> <p className='text-[#213F7D] text-base font-bold'>{userinfo.education.officeEmail} </p></div>
       <div className='flex flex-col items-start justify-center'><p className=''>MONTHLY INCOME</p> <p className='text-[#213F7D] text-base font-bold'> {`#${userinfo.education.monthlyIncome[0]}`}<span>-</span><span className='text-[#213F7D] text-base font-bold'>{`#${userinfo.education.monthlyIncome[1]}`}</span></p></div>
       <div className='flex flex-col items-start justify-center'><p className=''> LOAN REPAYMENT</p> <p className='text-[#213F7D] text-base font-bold'> {userinfo.education.loanRepayment}</p></div>
@@ -117,7 +117,7 @@ const Profile = () => {
     </div>
     <div className='flex flex-col items-start gap-5  border-solid border-b-2  border-[#39CDCC]'>
     <p className='text-[#213F7D] text-base font-bold'>Socials</p>
-    <div className='flex items-start gap-32 mb-2'>
+    <div className='flex flex-col md:flex-row items-center  md:items-start gap-10 md:gap-32 mb-2'>
     <div className='flex flex-col items-start justify-center'><p className=''>TWITTER</p> <p className='text-[#213F7D] text-base font-bold'>{userinfo.socials.twitter} </p></div>
       <div className='flex flex-col items-start justify-center'><p className=''>FACEBOOK</p> <p className='text-[#213F7D] text-base font-bold'>{userinfo.socials.facebook}</p></div>
       <div className='flex flex-col items-start justify-center'><p className=''>INSTAGRAM</p> <p className='text-[#213F7D] text-base font-bold'> {userinfo.socials.instagram}</p></div>
