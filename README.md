@@ -10,7 +10,7 @@ Dashboard to view profile and loan history
 Loan application form
 
 ## Installation
-Clone the repository: git clone https://github.com/your-username/lendqr.git
+Clone the repository: git clone https://github.com/Rahdeg/lendsqr-fe-test.git
 
 Install dependencies: npm install
 
